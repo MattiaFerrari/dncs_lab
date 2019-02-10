@@ -11,6 +11,7 @@ ip addr add 192.168.1.1/24 dev eth1.1
 ip addr add 192.168.2.1/24 dev eth1.2
 ip addr add 192.168.3.1 dev eth2
 ip link set eth1 up
+ip link set eth2 up
 ip link set eth1.1 up
 ip link set eth1.2 up
 sysctl net.ipv4.ip_forward=1

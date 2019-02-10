@@ -78,15 +78,29 @@ host-b                    running (virtualbox)
 `vagrant ssh switch`
 `vagrant ssh host-a`
 `vagrant ssh host-b`
-# Setup
-- 4 Subnet: 
-        - A router-1 host-1-a e gli altri 128 host -> 130 indirizzi
-        - B router-1 host-1-b e gli altri 25 host -> 27 indirizzi
-        - C router-1 e router-2 -> 2 indirizzi
-        - D router-2 e host-2-c -> 2 indirizzi
-        uso classe B
-- A: 
-        - Subnet ID 172.16.0.0
-        - router-1 ID 
-        -host-1-a ID
+# Network configuration
+4 Subnet:
+
+*A(host-1-a,router-1 and other 128 host): 
+	Subnet ID: 192.168.1.0/24
+	Host-1-a: 192.168.1.254	
+	Router-1: 192.168.1.1
+	Netmask: 255.255.255.0
+
+*B(host-1-b,router-1 and other 23 host):    
+	Subnet ID: 192.168.2.0/27
+	Host-1-b: 192.168.2.30	
+	Router-1: 192.168.2.1
+	Netmask: 255.255.255.224
+*C(router-1 and router-2):    
+	Subnet ID: 192.168.3.0/30
+	router-1: 192.168.3.1	
+	Router-2: 192.168.3.2
+	Netmask: 255.255.255.252
+
+*D(host-2-c and router-2):	
+	Subnet ID: 192.168.4.0/30
+	host-2-c: 192.168.4.2	
+	router-2: 192.168.4.1
+	Netmask: 255.255.255.252
         

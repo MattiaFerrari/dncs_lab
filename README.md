@@ -78,4 +78,15 @@ host-b                    running (virtualbox)
 `vagrant ssh switch`
 `vagrant ssh host-a`
 `vagrant ssh host-b`
-# Configurazione router 1
+# Setup
+- 4 Subnet: 
+        - A router-1 host-1-a e gli altri 128 host -> 130 indirizzi
+        - B router-1 host-1-b e gli altri 25 host -> 27 indirizzi
+        - C router-1 e router-2 -> 2 indirizzi
+        - D router-2 e host-2-c -> 2 indirizzi
+        uso classe B
+- A: 
+        - Subnet ID 172.16.0.0
+        - router-1 ID 
+        -host-1-a ID
+        

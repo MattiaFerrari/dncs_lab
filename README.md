@@ -78,3 +78,4 @@ host-b                    running (virtualbox)
 `vagrant ssh switch`
 `vagrant ssh host-a`
 `vagrant ssh host-b`
+# Configurazione router 1

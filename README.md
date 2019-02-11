@@ -101,6 +101,11 @@ In the subnet A we can find only `router-2` and `host-2-c`so like Subnet C we ne
 - Router-2: 163.10.3.2
 - NetMask: 255.255.255.252
 ## Vagrantfile and devices configuration
+------------
+### Vagrantfile
+I did this changes at the Vagrantfile:
+- Renamed the link between all devices
+- Assigned to each devices one's file .sh
 ### router-1
 Ho modificato il file router-1.sh così:
 First of all I connected the `router-1` to the `switch` with this line:

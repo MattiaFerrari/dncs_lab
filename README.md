@@ -10,7 +10,7 @@ The subnetting needs to be designed to accommodate the following requirement (no
   - Up to 130 hosts in the same subnet of host-1-a
   - Up to 25 hosts in the same subnet of host-1-b
   - Consume as few IP addresses as possible
-## Network Map
+## Network map
 ```
 
 
@@ -56,7 +56,7 @@ The subnetting needs to be designed to accommodate the following requirement (no
 
 ```
 
-## Network description
+## Network description and configuration
 ----
 ### Subnet A:
 In the subnet A we can find `router-1`,`switch` and `host-1-a` and other 128 hosts.

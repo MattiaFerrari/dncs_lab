@@ -120,6 +120,46 @@ ip add add 163.10.1.31/30 dev eth1.2
 ip link set eth1.1 up
 ip link set eth1.2 up
 ```
+### host-1-a
+I created host-1-a.sh file and I added it these line of common.sh file:
+```
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get install -y tcpdump --assume-yes
+```
+Next I created port eth1 in the host and I assigned the address.
+```
+ip link set dev eth1 up
+ip add add 163.10.0.1 dev eth1
+```
+At the end I add a static route to router-1 for to add the route that a packet has to do
+ip replace 163.168.X.X/XX via 163.168.10.254
+
+### host-1-b 
+the setup of host-1-b è duale a quella dell' host-1-a perciò riporto solo le righe di codice:
+.......
+### switch
+In switch.sh with the following lines, i created a bridge and add the interfaces to:
+- eth1
+- eth2 (access port for VLAN1)
+- eth3 (access port for VLAN2)
+I used the ovs-vsctl program implemented by Open vSwitch
+```
+ovs-vsctl add-br switch
+ovs-vsctl add-port switch eth1
+ovs-vsctl add-port switch eth2 tag=170
+ovs-vsctl add-port switch eth3 tag=171
+```
+At the end I switch on the port created in the previus lines
+```
+ip link set dev eth1 up
+ip link set dev eth2 up
+ip link set dev eth3 up
+ip link set ovs-system up
+```
+
+### router-2
+### host-2-c
 
 ## Test
 ----------

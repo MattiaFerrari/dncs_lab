@@ -1,5 +1,5 @@
 # DNCS-LAB (2018-2019)
-Design of Networks and Communication Systems
+Design of Networks and Communication Systems 
 Mattia Ferrari
 ## Assigment
 Based the Vagrantfile and the provisioning scripts available at: https://github.com/dustnic/dncs-lab the candidate is required to design a functioning network where any host configured and attached to router-1 (through switch ) can browse a website hosted on host-2-c.

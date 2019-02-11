@@ -5,92 +5,101 @@ Mattia Ferrari
 Based the Vagrantfile and the provisioning scripts available at: https://github.com/dustnic/dncs-lab the candidate is required to design a functioning network where any host configured and attached to router-1 (through switch ) can browse a website hosted on host-2-c.
 
 The subnetting needs to be designed to accommodate the following requirement (no need to create more hosts than the one described in the vagrantfile):
+  - Up to 130 hosts in the same subnet of host-1-a
+  - Up to 25 hosts in the same subnet of host-1-b
+  - Consume as few IP addresses as possible
+## Network Map
+```
 
-  *Up to 130 hosts in the same subnet of host-1-a
-  *Up to 25 hosts in the same subnet of host-1-b
-  *Consume as few IP addresses as possible
-  
-  
-## Network configuration
-4 Subnet:
 
-*A(host-1-a,router-1 and other 128 host): 
-	Subnet ID: 192.168.1.0/24
-	Host-1-a: 192.168.1.254	
-	Router-1: 192.168.1.1
-	Netmask: 255.255.255.0
+        +-----------------------------------------------------+
+        |                                                     |
+        |                                                     |eth0
+        +--+--+                +------------+             +------------+
+        |     |                |            |             |            |
+        |     |            eth0|            |eth2     eth2|            |
+        |     +----------------+  router-1  +-------------+  router-2  |
+        |     |                |            |             |            |
+        |     |                |            |             |            |
+        |  M  |                +------------+             +------------+
+        |  A  |                eth1.1|eth1.2                     |eth1
+        |  N  |                      |                           |
+        |  A  |                      |                           |
+        |  G  |                      |                     +-----+----+
+        |  E  |                      |eth1                 |          |
+        |  M  |            +-------------------+           |          |
+        |  E  |        eth0|                   |           | host-2-c |
+        |  N  +------------+      SWITCH       |           |          |
+        |  T  |            |                   |           |          |
+        |     |            +-------------------+           +----------+
+        |  V  |               |eth2         |eth3                |eth0
+        |  A  |               |             |                    |
+        |  G  |               |             |                    |
+        |  R  |               |eth1         |eth1                |
+        |  A  |        +----------+     +----------+             |
+        |  N  |        |          |     |          |             |
+        |  T  |    eth0|          |     |          |             |
+        |     +--------+ host-1-a |     | host-1-b |             |
+        |     |        |          |     |          |             |
+        |     |        |          |     |          |             |
+        ++-+--+        +----------+     +----------+             |
+        | |                              |eth0                  |
+        | |                              |                      |
+        | +------------------------------+                      |
+        |                                                       |
+        |                                                       |
+        +-------------------------------------------------------+
 
-*B(host-1-b,router-1 and other 23 host):    
-	Subnet ID: 192.168.2.0/27
-	Host-1-b: 192.168.2.30	
-	Router-1: 192.168.2.1
-	Netmask: 255.255.255.224
-*C(router-1 and router-2):    
-	Subnet ID: 192.168.3.0/30
-	router-1: 192.168.3.1	
-	Router-2: 192.168.3.2
-	Netmask: 255.255.255.252
 
-*D(host-2-c and router-2):	
-	Subnet ID: 192.168.4.0/30
-	host-2-c: 192.168.4.2	
-	router-2: 192.168.4.1
-	Netmask: 255.255.255.252
-------
-dato che fra router-1 e switch 1 c' è solo una connessione devo usare per forza di cose due VLAN.
-VLAN Subnet A -> ID 1
-VLAN Subnet B -> ID 2
-# Virtual machines configuration
-Ho modificato il Vagrantfile in modo tale da configurare tutte le virtual machines necessarie con le loro interfacce e 
-assegnando ad ogni elemente della rete un proprio file .sh
-router-1:
- config.vm.define "router-1" do |router1|
-    router1.vm.box = "minimal/trusty64"
-    router1.vm.hostname = "router-1"
-    router1.vm.network "private_network", virtualbox__intnet: "router1-switch", auto_config: false
-    router1.vm.network "private_network", virtualbox__intnet: "router1-router2", auto_config: false
-    router1.vm.provision "shell", path: "router1.sh"
-  end
 
-router-2:
-config.vm.define "router-2" do |router2|
-    router2.vm.box = "minimal/trusty64"
-    router2.vm.hostname = "router-2"
-    router2.vm.network "private_network", virtualbox__intnet: "router-2-host-2-c", auto_config: false
-    router2.vm.network "private_network", virtualbox__intnet: "router-1-router-2", auto_config: false
-    router2.vm.provision "shell", path: "router2.sh"
-  end
+```
 
-switch:
- config.vm.define "switch" do |switch|
-    switch.vm.box = "minimal/trusty64"
-    switch.vm.hostname = "switch"
-    switch.vm.network "private_network", virtualbox__intnet: "router-1-switch", auto_config: false
-    switch.vm.network "private_network", virtualbox__intnet: "switch-host-1-a", auto_config: false
-    switch.vm.network "private_network", virtualbox__intnet: "switch-host-1-b", auto_config: false
-    switch.vm.provision "shell", path: "switch.sh"
-  end
-    
-host-1-a:
-config.vm.define "host-1-a" do |hosta|
-    hosta.vm.box = "minimal/trusty64"
-    hosta.vm.hostname = "host-1-a"
-    hosta.vm.network "private_network", virtualbox__intnet: "switch-host-1-a", auto_config: false
-    hosta.vm.provision "shell", path: "host-1-a.sh"
-  end
-host-1-b:
-config.vm.define "host-1-b" do |hostb|
-    hostb.vm.box = "minimal/trusty64"
-    hostb.vm.hostname = "host-1-b"
-    hostb.vm.network "private_network", virtualbox__intnet: "switch-host-1-b", auto_config: false
-    hostb.vm.provision "shell", path: "host-1-b.sh"
-  end
-host-2-c:
-config.vm.define "host-2-c" do |hostc|
-    hostc.vm.box = "minimal/trusty64"
-    hostc.vm.hostname = "host-2-c"
-    hostc.vm.network "private_network", virtualbox__intnet: "router-2-host-2-c", auto_config: false
-    hostc.vm.provision "shell", path: "host-2-c.sh"
-  end
-# Collegamenti
+## Network description
+----
+### Subnet A:
+In the subnet A we can find `router-1`,`switch` and `host-1-a` and other 128 hosts.
+For the configuration of adress I use /24 beacuase is the first that can adresses more than 132 device.
+##### IP
+- Subnet ID: 163.10.0.0/24
+- Broadcast : 163.10.0.255
+- Router-1: 163.10.0.254
+- Host-1-a: 163.10.0.1
+- Other host interval: 163.10.0.2-163.10.0.129
+- NetMask: 255.255.255.0
+### Subnet B:
+In the subnet A we can find `router-1`,`switch` and `host-1-b`.
+In the same way I used /30 for the adresses of this subnet.
+##### IP
+- Subnet ID: 163.10.1.0/30
+- Broadcast : 163.10.1.31
+- Router-1: 163.10.0.30
+- Host-1-b: 163.10.1.1
+- Other host interval: 163.10.1.2-163.10.26
+- NetMask: 255.255.255.224
+### VLAN
+Because between router-1 and switch there is only one psysical link I split this in two VLANs. One to connect `router-1` to `host-1-a` and one to connect `router-1` to `host-1-b`.
+| ID | Subnet |  
+| -- |:-----: | 
+| 1  | A      | 
+| 2  | B      |   
+### Subnet C:
+In the subnet A we can find only `router-1` and `router-2` so we need only 4 address.
+##### IP
+- Subnet ID: 163.10.2.0/32
+- Broadcast : 163.10.2.3
+- Router-1: 163.10.2.1
+- Router-2: 163.10.2.2
+- NetMask: 255.255.255.252
+### Subnet D:
+In the subnet A we can find only `router-2` and `host-2-c`so like Subnet C we need only 4 address.
+##### IP
+- Subnet ID: 163.10.3.0/32
+- Broadcast : 163.10.3.3
+- Router-1: 163.10.3.1
+- Router-2: 163.10.3.2
+- NetMask: 255.255.255.252
+
+
+
+
 

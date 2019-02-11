@@ -100,8 +100,29 @@ In the subnet A we can find only `router-2` and `host-2-c`so like Subnet C we ne
 - Router-1: 163.10.3.1
 - Router-2: 163.10.3.2
 - NetMask: 255.255.255.252
+## Vagrantfile and devices configuration
+### router-1
+Ho modificato il file router-1.sh così:
+First of all I connected the `router-1` to the `switch` with this line:
+```
+ip link set dev eth1 up
+```
+then I created the VLAN's splittando la porta eth1 in eth1.1 and eth1.2
+```
+ip link add link eth1 name eth1.1 type vlan id 1
+ip link add link eth1 name eth1.2 type vlan id 2
+```
+at the end I added the adress at the two virtual port and switch them on
+
+```
+ip add add 163.10.0.254/24 dev eth1.1
+ip add add 163.10.1.31/30 dev eth1.2
+ip link set eth1.1 up
+ip link set eth1.2 up
+```
 
 ## Test
+----------
 To test rechability, i ping any host from the another, for example to ping host-1-a from host-1-b:
 ```
 ~/dncs-lab$ vagrant ssh host-1-b

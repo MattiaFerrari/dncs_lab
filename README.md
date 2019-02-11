@@ -1,3 +1,5 @@
+Note: Sistemare tabella VLAN.
+
 # DNCS-LAB (2018-2019)
 Design of Networks and Communication Systems
 Mattia Ferrari

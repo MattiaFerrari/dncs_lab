@@ -1,4 +1,4 @@
-Note: Sistemare tabella VLAN.Modificare testo codice TEST
+Note: Sistemare tabella VLAN.Modificare testo codice TEST. Devo dire che ho modificato il vagrantfile!
 
 # DNCS-LAB (2018-2019)
 Design of Networks and Communication Systems

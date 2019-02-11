@@ -1,4 +1,4 @@
-Note: Sistemare tabella VLAN.
+Note: Sistemare tabella VLAN.Modificare testo codice TEST
 
 # DNCS-LAB (2018-2019)
 Design of Networks and Communication Systems
@@ -101,6 +101,12 @@ In the subnet A we can find only `router-2` and `host-2-c`so like Subnet C we ne
 - Router-2: 163.10.3.2
 - NetMask: 255.255.255.252
 
+## Test
+To test rechability, i ping any host from the another, for example to ping host-1-a from host-1-b:
+```
+~/dncs-lab$ vagrant ssh host-1-b
+vagrant@host-1-a:~$ ping 163.10.0.1
+```
 
 
 

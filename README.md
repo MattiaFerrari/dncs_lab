@@ -56,7 +56,6 @@ The subnetting needs to be designed to accommodate the following requirement (no
 ```
 
 ## Network description and configuration
-----
 ### Subnet A:
 In the subnet A we can find `router-1`,`switch` and `host-1-a` and other 128 hosts.
 For the configuration of adress I use /24 beacuase is the first that can adresses 132 or more device.
@@ -118,7 +117,6 @@ In the subnet A we can find only `router-2` and `host-2-c`so like Subnet C we ne
 | NetMask   | 255.255.255.252 |    
      
 ## Vagrantfile and devices configuration
-------------
 ### Vagrantfile
 I did this changes at the Vagrantfile:
 - Renamed the link between all devices
@@ -143,7 +141,7 @@ ip link set eth1.1 up
 ip link set eth1.2 up
 ```   
     
-   ### switch
+### switch
 With the use of ovs-vsctl program implemented by Open vSwitch.       
 In switch.sh I added the following lines, i created a bridge and add the interfaces to:
 - eth1
@@ -234,20 +232,8 @@ docker rm $(docker ps -aq)
 docker run -dit --name server -p 77:77 -v /var/www/:/usr/local/apache2/htdocs/ httpd:2.4
 ```
 
-Finally I write a HTML page in /var/www/site.html.
-```
-echo "<!DOCTYPE html>
-<html>
-<head>
-<title>Homepage - hostc</title>
-</head>
-<body>
-Website homepage
-</body>
-</html>" > /var/www/site.html
-```
+Finally I write a HTML page in /var/www/site.html
 ## Test
-----------
 To test rechability, i ping any host from the another, for example to ping host-1-a from host-1-b:
 ```
 ~/dncs-lab$ vagrant ssh host-1-b

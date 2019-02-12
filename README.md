@@ -1,5 +1,3 @@
-Note: Sistemare tabella VLAN.Modificare testo codice TEST. Devo dire che ho modificato il vagrantfile!
-
 # DNCS-LAB (2018-2019)
 Design of Networks and Communication Systems    
 Mattia Ferrari
@@ -223,7 +221,31 @@ vtysh -c 'configure terminal' -c 'interface eth2' -c 'ip ospf area 0.0.0.0'
 vtysh -c 'configure terminal' -c 'router ospf' -c 'redistribute connected'
 ```
 ### host-2-c
+I rename docker.sh file in host-2-c.sh. Next I create the port eth1,assigned the IP address and add a static route to router-2
+```
+ip link set eth1 up
+ip addr add 163.10.3.2/30 dev eth1
+ip route replace 163.10.X.X/XX via 163.10.3.1/30
+```
+Per la visualizzazione del sito, prima ho ripulito ogni possibile contenitore esistente and then i start an Apache container named "server" on the port 77 (mounting /var/www/ directory)
+```
+docker kill $(docker ps -q)
+docker rm $(docker ps -aq)
+docker run -dit --name server -p 77:77 -v /var/www/:/usr/local/apache2/htdocs/ httpd:2.4
+```
 
+Finally I write a HTML page in /var/www/site.html.
+```
+echo "<!DOCTYPE html>
+<html>
+<head>
+<title>Homepage - hostc</title>
+</head>
+<body>
+Website homepage
+</body>
+</html>" > /var/www/site.html
+```
 ## Test
 ----------
 To test rechability, i ping any host from the another, for example to ping host-1-a from host-1-b:

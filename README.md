@@ -61,7 +61,7 @@ The subnetting needs to be designed to accommodate the following requirement (no
 ----
 ### Subnet A:
 In the subnet A we can find `router-1`,`switch` and `host-1-a` and other 128 hosts.
-For the configuration of adress I use /24 beacuase is the first that can adresses more than 132 device.
+For the configuration of adress I use /24 beacuase is the first that can adresses 132 or more device.
 ##### IP    
 
 |                     | Address                 |       
@@ -75,7 +75,7 @@ For the configuration of adress I use /24 beacuase is the first that can adresse
     
 ### Subnet B:
 In the subnet A we can find `router-1`,`switch` and `host-1-b`.
-In the same way I used /30 for the adresses of this subnet.
+In the same way I used /27 for the adresses of this subnet.
 ##### IP    
     
 |                     | Address                 |
@@ -157,17 +157,28 @@ ip link set dev eth1 up
 ip add add 163.10.0.1 dev eth1
 ```
 At the end I add a static route to router-1 for to add the route that a packet has to do
-ip replace 163.168.X.X/XX via 163.168.10.254
+ip replace 163.168.X.X/XX via 163.168.0.254
 
 ### host-1-b 
-the setup of host-1-b è duale a quella dell' host-1-a perciò riporto solo le righe di codice:
-.......
+I created host-1-b.sh file and I added it these line of common.sh file:
+```
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get install -y tcpdump --assume-yes
+```
+Next I created port eth1 in the host and I assigned the address.
+```
+ip link set dev eth1 up
+ip add add 163.10.1.1 dev eth1
+```
+At the end I add a static route to router-1 for to add the route that a packet has to do
+ip replace 163.168.X.X/XX via 163.168.0.31
 ### switch
-In switch.sh with the following lines, i created a bridge and add the interfaces to:
+With the use of ovs-vsctl program implemented by Open vSwitch.       
+In switch.sh I added the following lines, i created a bridge and add the interfaces to:
 - eth1
 - eth2 (access port for VLAN1)
 - eth3 (access port for VLAN2)
-I used the ovs-vsctl program implemented by Open vSwitch
 ```
 ovs-vsctl add-br switch
 ovs-vsctl add-port switch eth1

@@ -191,20 +191,22 @@ At the end I add a static route to router-1 for to add the route that a packet h
 ip replace 163.168.X.X/XX via 163.168.0.254
 
 ### host-1-b 
-I created host-1-b.sh file and I added it these line of common.sh file:
+I created host-1-b.sh file and I added it these line:
 ```
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get install -y tcpdump --assume-yes
+apt-get install -y apt-transport-https ca-certificates curl software-properties-common --assume-yes --force-yes
 ```
 Next I created port eth1 in the host and I assigned the address.
 ```
 ip link set dev eth1 up
 ip add add 163.10.1.1/27 dev eth1
 ```
-At the end I add a static route to router-1 for to add the route that a packet has to do
+At the end I add a static route to router-1 for to add the route that a packet has to do.
+```
 ip replace 163.168.X.X/XX via 163.168.0.31
-    
+```    
 ### router-2
 First of all I copyed the following lines from router.sh to router-2.sh
 ```

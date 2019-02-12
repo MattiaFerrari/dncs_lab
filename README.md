@@ -62,13 +62,16 @@ The subnetting needs to be designed to accommodate the following requirement (no
 ### Subnet A:
 In the subnet A we can find `router-1`,`switch` and `host-1-a` and other 128 hosts.
 For the configuration of adress I use /24 beacuase is the first that can adresses more than 132 device.
-##### IP
-- Subnet ID: 163.10.0.0/24
-- Broadcast : 163.10.0.255
-- Router-1: 163.10.0.254
-- Host-1-a: 163.10.0.1
-- Other host interval: 163.10.0.2-163.10.0.129
-- NetMask: 255.255.255.0
+##### IP    
+    
+| Subnet ID           | 163.10.0.0/24           |   
+|---------------------|-------------------------|    
+| Broadcast           | 163.10.0.255            |    
+| Router-1            | 163.10.0.254            |    
+| Host-1-a            | 163.10.0.1              |    
+| Other host interval | 163.10.0.2-163.10.0.129 |    
+| NetMask             | 255.255.255.0           |      
+    
 ### Subnet B:
 In the subnet A we can find `router-1`,`switch` and `host-1-b`.
 In the same way I used /30 for the adresses of this subnet.

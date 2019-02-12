@@ -211,7 +211,7 @@ ip addr add 163.10.3.1/30 dev eth1
 ip link set eth1 up
 ip link set eth2 up
 ```
-At the end i enable the forwarding that is necessary to send each packet to the correct port and then I configured the FRRouting OSPF protocol.
+At the end I enable the forwarding that is necessary to send each packet to the correct port and then I configured the FRRouting OSPF protocol.
 ```
 sysctl net.ipv4.ip_forward=1
 sed -i 's/zebra=no/zebra=yes/g' /etc/frr/daemons

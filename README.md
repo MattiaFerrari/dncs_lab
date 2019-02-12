@@ -175,11 +175,12 @@ ip link set ovs-system up
 ```  
        
 ### host-1-a
-I created host-1-a.sh file and I added it these line of common.sh file:
+I created host-1-a.sh file and I added it these line:
 ```
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get install -y tcpdump --assume-yes
+apt-get install -y apt-transport-https ca-certificates curl software-properties-common --assume-yes --force-yes
 ```
 Next I created port eth1 in the host and I assigned the address.
 ```

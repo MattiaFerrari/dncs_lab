@@ -80,7 +80,7 @@ In the same way I used /30 for the adresses of this subnet.
     
 |                     | Address                 |
 |---------------------|-------------------------|
-| Subnet ID           | 163.10.1.0/30           |
+| Subnet ID           | 163.10.1.0/27           |
 | Broadcast           | 163.10.1.31             |
 | Router-1            | 163.10.1.30             |
 | Host-1-b            | 163.10.1.1              |
@@ -97,20 +97,28 @@ Because between router-1 and switch there is only one psysical link I split this
     
 ### Subnet C:
 In the subnet A we can find only `router-1` and `router-2` so we need only 4 address.
-##### IP
-- Subnet ID: 163.10.2.0/32
-- Broadcast : 163.10.2.3
-- Router-1: 163.10.2.1
-- Router-2: 163.10.2.2
-- NetMask: 255.255.255.252
+##### IP 
+     
+|           | Address         |
+|-----------|-----------------|
+| Subnet ID | 163.10.2.0/32   |
+| Broadcast | 163.10.2.3      |
+| Router-1  | 163.10.2.1      |
+| Router-2  | 163.10.2.2      |
+| NetMask   | 255.255.255.252 |    
+     
 ### Subnet D:
 In the subnet A we can find only `router-2` and `host-2-c`so like Subnet C we need only 4 address.
-##### IP
-- Subnet ID: 163.10.3.0/32
-- Broadcast : 163.10.3.3
-- Router-1: 163.10.3.1
-- Router-2: 163.10.3.2
-- NetMask: 255.255.255.252
+##### IP    
+
+|           | Address         |
+|-----------|-----------------|
+| Subnet ID | 163.10.3.0/32   |
+| Broadcast | 163.10.3.3      |
+| Router-2  | 163.10.3.1      |
+| Host-2-c  | 163.10.3.2      |
+| NetMask   | 255.255.255.252 |    
+     
 ## Vagrantfile and devices configuration
 ------------
 ### Vagrantfile

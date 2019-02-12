@@ -1,8 +1,7 @@
 Note: Sistemare tabella VLAN.Modificare testo codice TEST. Devo dire che ho modificato il vagrantfile!
 
 # DNCS-LAB (2018-2019)
-Design of Networks and Communication Systems
-Mattia Ferrari
+Design of Networks and Communication Systems Mattia Ferrari
 
 ## Assigment
 Based the Vagrantfile and the provisioning scripts available at: https://github.com/dustnic/dncs-lab the candidate is required to design a functioning network where any host configured and attached to router-1 (through switch ) can browse a website hosted on host-2-c.
@@ -81,10 +80,10 @@ In the same way I used /30 for the adresses of this subnet.
 - NetMask: 255.255.255.224
 ### VLAN
 Because between router-1 and switch there is only one psysical link I split this in two VLANs. One to connect `router-1` to `host-1-a` and one to connect `router-1` to `host-1-b`.
-| ID | Subnet |  
-| -- |:-----: | 
-| 1  | A      | 
-| 2  | B      |   
+ ID | Subnet   
+ -- | --- 
+ 1  | A  
+ 2  | B        
 ### Subnet C:
 In the subnet A we can find only `router-1` and `router-2` so we need only 4 address.
 ##### IP

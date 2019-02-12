@@ -64,7 +64,6 @@ In the subnet A we can find `router-1`,`switch` and `host-1-a` and other 128 hos
 For the configuration of adress I use /24 beacuase is the first that can adresses more than 132 device.
 ##### IP    
     
-|                     | Address                 |
 |---------------------|-------------------------|
 | Subnet ID           | 163.10.0.0/24           |
 | Broadcast           | 163.10.0.255            |

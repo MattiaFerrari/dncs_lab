@@ -101,7 +101,7 @@ In the subnet A we can find only `router-1` and `router-2` so we need only 4 add
      
 |           | Address         |
 |-----------|-----------------|
-| Subnet ID | 163.10.2.0/32   |
+| Subnet ID | 163.10.2.0/30   |
 | Broadcast | 163.10.2.3      |
 | Router-1  | 163.10.2.1      |
 | Router-2  | 163.10.2.2      |
@@ -113,7 +113,7 @@ In the subnet A we can find only `router-2` and `host-2-c`so like Subnet C we ne
 
 |           | Address         |
 |-----------|-----------------|
-| Subnet ID | 163.10.3.0/32   |
+| Subnet ID | 163.10.3.0/30   |
 | Broadcast | 163.10.3.3      |
 | Router-2  | 163.10.3.1      |
 | Host-2-c  | 163.10.3.2      |
@@ -126,12 +126,12 @@ I did this changes at the Vagrantfile:
 - Renamed the link between all devices
 - Assigned to each devices one's file .sh
 ### router-1
-Ho modificato il file router-1.sh così:
+I modified router.sh in this way:     
 First of all I connected the `router-1` to the `switch` with this line:
 ```
 ip link set dev eth1 up
 ```
-then I created the VLAN's splittando la porta eth1 in eth1.1 and eth1.2
+then I created the VLAN's (dividendo) the port eth1 in eth1.1 and eth1.2
 ```
 ip link add link eth1 name eth1.1 type vlan id 1
 ip link add link eth1 name eth1.2 type vlan id 2
@@ -140,7 +140,7 @@ at the end I added the adress at the two virtual port and switch them on
 
 ```
 ip add add 163.10.0.254/24 dev eth1.1
-ip add add 163.10.1.31/30 dev eth1.2
+ip add add 163.10.1.31/27 dev eth1.2
 ip link set eth1.1 up
 ip link set eth1.2 up
 ```
@@ -154,7 +154,7 @@ apt-get install -y tcpdump --assume-yes
 Next I created port eth1 in the host and I assigned the address.
 ```
 ip link set dev eth1 up
-ip add add 163.10.0.1 dev eth1
+ip add add 163.10.0.1/24 dev eth1
 ```
 At the end I add a static route to router-1 for to add the route that a packet has to do
 ip replace 163.168.X.X/XX via 163.168.0.254
@@ -169,7 +169,7 @@ apt-get install -y tcpdump --assume-yes
 Next I created port eth1 in the host and I assigned the address.
 ```
 ip link set dev eth1 up
-ip add add 163.10.1.1 dev eth1
+ip add add 163.10.1.1/27 dev eth1
 ```
 At the end I add a static route to router-1 for to add the route that a packet has to do
 ip replace 163.168.X.X/XX via 163.168.0.31
@@ -191,11 +191,35 @@ ip link set dev eth1 up
 ip link set dev eth2 up
 ip link set dev eth3 up
 ip link set ovs-system up
-```
-
+```  
+   
 ### router-2
-### host-2-c
-
+First of all I copyed the following lines from router.sh to router-2.sh
+```
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get install -y tcpdump apt-transport-https ca-certificates curl software-properties-common --assume-yes --force-yes
+wget -O- https://apps3.cumulusnetworks.com/setup/cumulus-apps-deb.pubkey | apt-key add -
+add-apt-repository "deb [arch=amd64] https://apps3.cumulusnetworks.com/repos/deb $(lsb_release -cs) roh-3"
+apt-get update
+apt-get install -y frr --assume-yes --force-yes
+```
+then I added two ports at the router and switch up the links
+```
+ip addr add 163.10.2.2/30 dev eth2
+ip addr add 163.10.3.1/30 dev eth1
+ip link set eth1 up
+ip link set eth2 up
+```
+At the end i enable the forwarding that is necessary to send each packet to the correct port and then I configured the FRRouting OSPF protocol.
+```
+sysctl net.ipv4.ip_forward=1
+sed -i 's/zebra=no/zebra=yes/g' /etc/frr/daemons
+sed -i 's/ospfd=no/ospfd=yes/g' /etc/frr/daemons
+service frr restart
+vtysh -c 'configure terminal' -c 'interface eth2' -c 'ip ospf area 0.0.0.0'
+vtysh -c 'configure terminal' -c 'router ospf' -c 'redistribute connected'
+```
 ## Test
 ----------
 To test rechability, i ping any host from the another, for example to ping host-1-a from host-1-b:

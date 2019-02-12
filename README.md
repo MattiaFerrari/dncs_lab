@@ -122,7 +122,7 @@ I did this changes at the Vagrantfile:
 - Renamed the link between all devices
 - Assigned to each devices one's file .sh
 ### router-1
-I modified router.sh in this way:     
+I modified `router.sh` in this way:     
 First of all I connected the `router-1` to the `switch` with this line:
 ```
 ip link set dev eth1 up

@@ -2,7 +2,7 @@ Note: Sistemare tabella VLAN.Modificare testo codice TEST. Devo dire che ho modi
 
 # DNCS-LAB (2018-2019)
 Design of Networks and Communication Systems
-# Mattia Ferrari
+Mattia Ferrari
 
 ## Assigment
 Based the Vagrantfile and the provisioning scripts available at: https://github.com/dustnic/dncs-lab the candidate is required to design a functioning network where any host configured and attached to router-1 (through switch ) can browse a website hosted on host-2-c.

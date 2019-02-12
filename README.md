@@ -76,13 +76,17 @@ For the configuration of adress I use /24 beacuase is the first that can adresse
 ### Subnet B:
 In the subnet A we can find `router-1`,`switch` and `host-1-b`.
 In the same way I used /30 for the adresses of this subnet.
-##### IP
-- Subnet ID: 163.10.1.0/30
-- Broadcast : 163.10.1.31
-- Router-1: 163.10.0.30
-- Host-1-b: 163.10.1.1
-- Other host interval: 163.10.1.2-163.10.26
-- NetMask: 255.255.255.224
+##### IP    
+    
+|                     | Address                 |
+|---------------------|-------------------------|
+| Subnet ID           | 163.10.1.0/30           |
+| Broadcast           | 163.10.1.31             |
+| Router-1            | 163.10.1.30             |
+| Host-1-b            | 163.10.1.1              |
+| Other host interval | 163.10.1.2-163.10.10.26 |
+| NetMask             | 255.255.255.224         |    
+    
 ### VLAN
 Because between router-1 and switch there is only one psysical link I split this in two VLANs. One to connect `router-1` to `host-1-a` and one to connect `router-1` to `host-1-b`. 
       

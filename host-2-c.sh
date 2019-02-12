@@ -7,3 +7,5 @@ apt-get install -y docker-ce --assume-yes --force-yes
 apt-get install -y apt-transport-https ca-certificates curl software-properties-common --assume-yes --force-yes
 ip addr add 192.168.4.2
 ip link set eth1 up
+
+///// DOCKER //////

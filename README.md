@@ -80,10 +80,10 @@ In the same way I used /30 for the adresses of this subnet.
 - NetMask: 255.255.255.224
 ### VLAN
 Because between router-1 and switch there is only one psysical link I split this in two VLANs. One to connect `router-1` to `host-1-a` and one to connect `router-1` to `host-1-b`.
- ID | Subnet   
- -- | --- 
- 1  | A  
- 2  | B        
+ First Header | Second Header
+------------ | -------------
+Content from cell 1 | Content from cell 2
+Content in the first column | Content in the second column       
 ### Subnet C:
 In the subnet A we can find only `router-1` and `router-2` so we need only 4 address.
 ##### IP

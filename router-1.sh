@@ -10,13 +10,13 @@ ip link set eth1 up
 ip link add link eth1 name eth1.1 type vlan id 1
 ip link add link eth1 name eth1.2 type vlan id 2
 
-ip addr add 192.168.1.1/24 dev eth1.1
-ip addr add 192.168.2.1/24 dev eth1.2
+ip addr add 192.168.0.254/24 dev eth1.1
+ip addr add 192.168.1.30/27 dev eth1.2
 
 ip link set eth1.1 up
 ip link set eth1.2 up
 
-ip addr add 192.168.3.1 dev eth2
+ip addr add 192.168.10.3.1 dev eth2
 ip link set eth2 up
 
 sysctl net.ipv4.ip_forward=1

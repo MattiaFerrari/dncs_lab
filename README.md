@@ -143,7 +143,28 @@ ip add add 163.10.0.254/24 dev eth1.1
 ip add add 163.10.1.31/27 dev eth1.2
 ip link set eth1.1 up
 ip link set eth1.2 up
+```   
+    
+   ### switch
+With the use of ovs-vsctl program implemented by Open vSwitch.       
+In switch.sh I added the following lines, i created a bridge and add the interfaces to:
+- eth1
+- eth2 (access port for VLAN1)
+- eth3 (access port for VLAN2)
 ```
+ovs-vsctl add-br switch
+ovs-vsctl add-port switch eth1
+ovs-vsctl add-port switch eth2 tag=170
+ovs-vsctl add-port switch eth3 tag=171
+```
+At the end I switch on the port created in the previus lines
+```
+ip link set dev eth1 up
+ip link set dev eth2 up
+ip link set dev eth3 up
+ip link set ovs-system up
+```  
+       
 ### host-1-a
 I created host-1-a.sh file and I added it these line of common.sh file:
 ```
@@ -173,26 +194,7 @@ ip add add 163.10.1.1/27 dev eth1
 ```
 At the end I add a static route to router-1 for to add the route that a packet has to do
 ip replace 163.168.X.X/XX via 163.168.0.31
-### switch
-With the use of ovs-vsctl program implemented by Open vSwitch.       
-In switch.sh I added the following lines, i created a bridge and add the interfaces to:
-- eth1
-- eth2 (access port for VLAN1)
-- eth3 (access port for VLAN2)
-```
-ovs-vsctl add-br switch
-ovs-vsctl add-port switch eth1
-ovs-vsctl add-port switch eth2 tag=170
-ovs-vsctl add-port switch eth3 tag=171
-```
-At the end I switch on the port created in the previus lines
-```
-ip link set dev eth1 up
-ip link set dev eth2 up
-ip link set dev eth3 up
-ip link set ovs-system up
-```  
-   
+    
 ### router-2
 First of all I copyed the following lines from router.sh to router-2.sh
 ```
@@ -220,6 +222,8 @@ service frr restart
 vtysh -c 'configure terminal' -c 'interface eth2' -c 'ip ospf area 0.0.0.0'
 vtysh -c 'configure terminal' -c 'router ospf' -c 'redistribute connected'
 ```
+### host-2-c
+
 ## Test
 ----------
 To test rechability, i ping any host from the another, for example to ping host-1-a from host-1-b:

@@ -122,17 +122,17 @@ I did this changes at the Vagrantfile:
 - Renamed the link between all devices
 - Assigned to each devices one's file .sh
 ### router-1
-I modified `router.sh` in this way:     
-First of all I connected the `router-1` to the `switch` with this line:
+First of all I modified the name of `router.sh` in `router-1.sh.   `      
+Then I connect the `router-1` to the `switch` with this line:
 ```
 ip link set dev eth1 up
 ```
-then I created the VLAN's (dividendo) the port eth1 in eth1.1 and eth1.2
+I create the VLAN's (dividendo) the port eth1 in eth1.1 and eth1.2
 ```
 ip link add link eth1 name eth1.1 type vlan id 1
 ip link add link eth1 name eth1.2 type vlan id 2
 ```
-at the end I added the adress at the two virtual port and switch them on
+I add the address at the two virtual port and switch them on
 
 ```
 ip add add 163.10.0.254/24 dev eth1.1
@@ -140,7 +140,20 @@ ip add add 163.10.1.31/27 dev eth1.2
 ip link set eth1.1 up
 ip link set eth1.2 up
 ```   
-    
+I assign IP addresses for interface eth2 and set them up
+``` 
+ip addr add 192.168.3.1 dev eth2
+ip link set eth2 up
+``` 
+Finaly I enable the forwarding that is necessary to send each packet to the correct port and then I configured the FRRouting OSPF protocol.
+```
+sysctl net.ipv4.ip_forward=1
+sed -i 's/zebra=no/zebra=yes/g' /etc/frr/daemons
+sed -i 's/ospfd=no/ospfd=yes/g' /etc/frr/daemons
+service frr restart
+vtysh -c 'configure terminal' -c 'interface eth2' -c 'ip ospf area 0.0.0.0'
+vtysh -c 'configure terminal' -c 'router ospf' -c 'redistribute connected'
+``` 
 ### switch
 With the use of ovs-vsctl program implemented by Open vSwitch.       
 In switch.sh I added the following lines, i created a bridge and add the interfaces to:

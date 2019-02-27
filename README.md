@@ -58,7 +58,7 @@ The subnetting needs to be designed to accommodate the following requirement (no
 ## Network description and configuration
 ### Subnet A:
 In the subnet A we can find `router-1`,`switch` and `host-1-a` and other 128 hosts.
-For the configuration of adress I use /24 beacuase is the first that can adresses 132 or more device.
+For the configuration of address I use /24 beacause is the first that can addresses 132 or more device.
 ##### IP    
 
 |                     | Address                 |       
@@ -85,7 +85,7 @@ In the same way I used /27 for the adresses of this subnet.
 | NetMask             | 255.255.255.224         |    
     
 ### VLAN
-Because between router-1 and switch there is only one psysical link I split this in two VLANs. One to connect `router-1` to `host-1-a` and one to connect `router-1` to `host-1-b`. 
+Because between router-1 and switch there is only one psysical link, I split this in two VLANs. One to connect `router-1` to `host-1-a` and one to connect `router-1` to `host-1-b`. 
       
 | ID | Subnet |    
 |----|--------|     
@@ -93,7 +93,7 @@ Because between router-1 and switch there is only one psysical link I split this
 | 2  | B      |  
     
 ### Subnet C:
-In the subnet A we can find only `router-1` and `router-2` so we need only 4 address.
+In the subnet A we can find only `router-1` and `router-2` so we need only 4 addresses.
 ##### IP 
      
 |           | Address         |
@@ -105,7 +105,7 @@ In the subnet A we can find only `router-1` and `router-2` so we need only 4 add
 | NetMask   | 255.255.255.252 |    
      
 ### Subnet D:
-In the subnet A we can find only `router-2` and `host-2-c`so like Subnet C we need only 4 address.
+In the subnet A we can find only `router-2` and `host-2-c`so like Subnet C we need only 4 addresses.
 ##### IP    
 
 |           | Address         |
@@ -127,7 +127,7 @@ Then I connect the `router-1` to the `switch` with this line:
 ```
 ip link set dev eth1 up
 ```
-I create the VLAN's (dividendo) the port eth1 in eth1.1 and eth1.2
+I create the VLAN's splitting the port eth1 in eth1.1 and eth1.2
 ```
 ip link add link eth1 name eth1.1 type vlan id 1
 ip link add link eth1 name eth1.2 type vlan id 2
@@ -156,7 +156,7 @@ vtysh -c 'configure terminal' -c 'router ospf' -c 'redistribute connected'
 ``` 
 ### switch
 With the use of ovs-vsctl program implemented by Open vSwitch.       
-In switch.sh I added the following lines, i created a bridge and add the interfaces to:
+In switch.sh I added the following lines, I created a bridge and then add the interfaces to:
 - eth1
 - eth2 (access port for VLAN1)
 - eth3 (access port for VLAN2)
